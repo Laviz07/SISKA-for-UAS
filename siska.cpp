@@ -2,37 +2,8 @@
 #include <string>
 using namespace std;
 
-const int MAX = 50;
+#include "struct.h"
 
-struct Akun {
-        string email, password, role;
-};
-
-struct Dosen {
-        string nip, nama;
-};
-
-struct Mhs {
-        string          npm, nama;
-        struct NodeKrs *krs = nullptr;
-};
-
-struct Matkul {
-        string kode, nama, nip_dosen;
-        int    sks;
-};
-
-struct NodeKrs {
-        Matkul  *mk;
-        NodeKrs *next;
-};
-
-Matkul daftarMatkul[MAX];
-Mhs    daftarMhs[MAX];
-Dosen  daftarDosen[MAX];
-Akun   daftarAkun[MAX];
-
-int jumlahAkun = 0, jumlahMhs = 0, jumlahDosen = 0, jumlahMatkul = 0;
 int pilihan;
 
 /* ---------------------- FUNGSI UNTUK KELOLA MAHASISWA --------------------- */
@@ -58,6 +29,8 @@ void cariMatkul(string kode);
 void editMatkul(string kode);
 void hapusMatkul(string kode);
 int  findMatkul(string kode);
+
+void tampilMatkulDosen(string email);
 
 /* ---------------------- FUNGSI UNTUK KELOLA KRS --------------------- */
 // void tambahKrs(Mhs *m);
@@ -101,22 +74,35 @@ Akun *login() {
 
         for (int i = 0; i < jumlahAkun; i++) {
             if (email == daftarAkun[i].email && password == daftarAkun[i].password) {
+                result = &daftarAkun[i];
                 cout << "Login berhasil!\n";
                 if (daftarAkun[i].role == "admin") {
                     cout << "Selamat datang, " << daftarAkun[i].role << "!\n";
                 } else if (daftarAkun[i].role == "dosen") {
-                    cout << "Selamat datang, " << daftarDosen[i].nama << "!\n";
+                    string nip = daftarAkun[i].email.substr(0, daftarAkun[i].email.find("@"));
+                    for (int j = 0; j < jumlahDosen; j++) {
+                        if (daftarDosen[j].nip == nip) {
+                            cout << "Selamat datang, " << daftarDosen[j].nama << "!\n";
+                            break;
+                        }
+                    }
                 } else if (daftarAkun[i].role == "mahasiswa") {
-                    cout << "Selamat datang, " << daftarMhs[i].nama << "!\n";
+                    string npm = daftarAkun[i].email.substr(0, daftarAkun[i].email.find("@"));
+                    for (int j = 0; j < jumlahMhs; j++) {
+                        if (daftarMhs[j].npm == npm) {
+                            cout << "Selamat datang, " << daftarMhs[j].nama << "!\n";
+                            break;
+                        }
+                    }
                 }
-                result = &daftarAkun[i];
+
                 break;
-            } else {
-                result = nullptr;
-                cout << "\nLogin gagal! Email atau password salah.\n";
-                attempt--;
-                cout << "Sisa percobaan: " << attempt << endl;
             }
+        }
+
+        if (!result) {
+            cout << "Login gagal. Silakan coba lagi.\n";
+            attempt--;
         }
     }
 
@@ -276,19 +262,23 @@ void menuDosen(Akun *user) {
     tampilkanBanner();
     do {
         cout << "\n---------- MENU UTAMA DOSEN ----------\n";
+        cout << "NIP: " << user->email.substr(0, user->email.find('@')) << endl;
+        // cout << "Nama: " << user->nama << endl;
+        cout << "Email: " << user->email << endl;
+
         cout << "1. Lihat Mata Kuliah Yang Diaampu\n";
         cout << "2. Tambah Mata Kuliah Yang Diaampu\n";
         cout << "0. Keluar\n";
         cout << "Masukkan pilihan anda: ";
         cin >> pilihan;
-    } while (pilihan != 0);
 
-    cout << "\nMata Kuliah Anda:\n";
-    for (int i = 0; i < jumlahMatkul; i++) {
-        if (daftarMatkul[i].nip_dosen == user->email.substr(0, user->email.find('@'))) {
-            cout << daftarMatkul[i].kode << " - " << daftarMatkul[i].nama << endl;
+        switch (pilihan) {
+            case 1 : tampilMatkulDosen(user->email); break;
+
+            default: break;
         }
-    }
+
+    } while (pilihan != 0);
 }
 
 int main() {
@@ -614,7 +604,7 @@ void tampilMatkul() {
 
     cout << "\nUrutkan berdasarkan:" << endl;
     cout << "1. Nama\n";
-    cout << "2. NPM\n";
+    cout << "2. Kode Mata Kuliah\n";
     cout << "3. Kembali\n";
     cout << "Pilihan: ";
     cin >> pilihan;
@@ -679,4 +669,21 @@ void hapusMatkul(string kode) {
     for (int i = idx; i < jumlahMatkul - 1; i++) { daftarMatkul[i] = daftarMatkul[i + 1]; }
     jumlahMatkul--;
     cout << "Matkul berhasil dihapus.\n";
+}
+
+void tampilMatkulDosen(string email) {
+    string nip;
+    for (int i = 0; i < jumlahDosen; i++) {
+        if (daftarAkun[i].email == email) {
+            nip = daftarDosen[i].nip;
+            break;
+        }
+    }
+
+    cout << "Matkul yang diampu oleh anda:\n";
+    for (int i = 0; i < jumlahMatkul; i++) {
+        if (daftarMatkul[i].nip_dosen == nip) {
+            cout << daftarMatkul[i].kode << " - " << daftarMatkul[i].nama << endl; //
+        }
+    }
 }
