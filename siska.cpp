@@ -330,6 +330,36 @@ void tambahMhs() {
     cout << "\nMahasiswa berhasil ditambahkan!.\n";
 }
 
+string keHurufKecil(string str) {
+    string hasil = "";
+    for (int i = 0; str[i] != '\0'; i++) {
+        char ch = str[i];
+        if (ch >= 'A' && ch <= 'Z') {
+            ch = ch + 32; // ubah huruf besar ke huruf kecil
+        }
+        hasil += ch;
+    }
+    return hasil;
+}
+
+void sortMhsByNama() { // menggunakan bubble sort
+    for (int i = 0; i < jumlahMhs - 1; i++) {
+        for (int j = i + 1; j < jumlahMhs; j++) {
+            if (keHurufKecil(daftarMhs[i].nama) > keHurufKecil(daftarMhs[j].nama)) {
+                swap(daftarMhs[i], daftarMhs[j]); //
+            }
+        }
+    }
+}
+
+void sortMhsByNPM() { // menggunakan bubble sort
+    for (int i = 0; i < jumlahMhs - 1; i++) {
+        for (int j = i + 1; j < jumlahMhs; j++) {
+            if (daftarMhs[i].npm > daftarMhs[j].npm) { swap(daftarMhs[i], daftarMhs[j]); }
+        }
+    }
+}
+
 void tampilMhs() {
     cout << "\n===== DAFTAR MAHASISWA =====\n";
 
@@ -347,14 +377,22 @@ void tampilMhs() {
     cout << "\nUrutkan berdasarkan:" << endl;
     cout << "1. Nama\n";
     cout << "2. NPM\n";
+    cout << "3. Kembali\n";
     cout << "Pilihan: ";
     cin >> pilihan;
-    if (pilihan == 1) {
-        // sortMhsNama();
-    } else if (pilihan == 2) {
-        // sortMhsNPM();
-    } else {
-        cout << "Pilihan tidak tersedia.\n";
+
+    switch (pilihan) {
+        case 1:
+            sortMhsByNama();
+            tampilMhs();
+            break;
+        case 2:
+            sortMhsByNPM();
+            tampilMhs();
+            break;
+        case 3 : return;
+
+        default: break;
     }
 
     cin.fail();
@@ -412,6 +450,26 @@ void tambahDosen() {
     cout << "\nDosen berhasil ditambahkan!\n";
 }
 
+void sortDosenByNama() { // menggunakan bubble sort
+    for (int i = 0; i < jumlahDosen - 1; i++) {
+        for (int j = i + 1; j < jumlahDosen; j++) {
+            if (keHurufKecil(daftarDosen[i].nama) > keHurufKecil(daftarDosen[j].nama)) {
+                swap(daftarDosen[i], daftarDosen[j]); //
+            }
+        }
+    }
+}
+
+void sortDosenByNIP() { // menggunakan bubble sort
+    for (int i = 0; i < jumlahDosen - 1; i++) {
+        for (int j = i + 1; j < jumlahDosen; j++) {
+            if (daftarDosen[i].nip > daftarDosen[j].nip) {
+                swap(daftarDosen[i], daftarDosen[j]); //
+            }
+        }
+    }
+}
+
 void tampilDosen() {
     cout << "\n===== DAFTAR DOSEN =====\n";
 
@@ -429,13 +487,27 @@ void tampilDosen() {
     cout << "\nUrutkan berdasarkan:" << endl;
     cout << "1. Nama\n";
     cout << "2. NIP\n";
+    cout << "3. Kembali\n";
     cout << "Pilihan: ";
     cin >> pilihan;
-    if (pilihan == 1) {
-        // sortMhsNama();
-    } else if (pilihan == 2) {
-        // sortMhsNPM();
+
+    switch (pilihan) {
+        case 1:
+            sortDosenByNama();
+            tampilDosen();
+            break;
+        case 2:
+            sortDosenByNIP();
+            tampilDosen();
+            break;
+        case 3 : return;
+
+        default: break;
     }
+
+    cin.fail();
+    cin.clear();
+    cin.ignore(1000, '\n');
 }
 
 int findDosen(string nip) {
@@ -510,6 +582,24 @@ Dosen *getDosenByNIP(string nip) {
     return NULL;
 }
 
+void sortMatkulByNama() { // menggunakan bubble sort
+    for (int i = 0; i < jumlahMatkul - 1; i++) {
+        for (int j = i + 1; j < jumlahMatkul; j++) {
+            if (keHurufKecil(daftarMatkul[i].nama) > keHurufKecil(daftarMatkul[j].nama)) {
+                swap(daftarMatkul[i], daftarMatkul[j]); //
+            }
+        }
+    }
+}
+
+void sortMatkulByKode() { // menggunakan bubble sort
+    for (int i = 0; i < jumlahMatkul - 1; i++) {
+        for (int j = i + 1; j < jumlahMatkul; j++) {
+            if (daftarMatkul[i].kode > daftarMatkul[j].kode) { swap(daftarMatkul[i], daftarMatkul[j]); }
+        }
+    }
+}
+
 void tampilMatkul() {
     cout << "\n===== DAFTAR MATA KULIAH =====\n";
     if (jumlahMatkul == 0) {
@@ -521,6 +611,31 @@ void tampilMatkul() {
              << " (SKS: " << daftarMatkul[i].sks
              << ", Dosen: " << getDosenByNIP(daftarMatkul[i].nip_dosen)->nama << ")\n";
     }
+
+    cout << "\nUrutkan berdasarkan:" << endl;
+    cout << "1. Nama\n";
+    cout << "2. NPM\n";
+    cout << "3. Kembali\n";
+    cout << "Pilihan: ";
+    cin >> pilihan;
+
+    switch (pilihan) {
+        case 1:
+            sortMatkulByNama();
+            tampilMatkul();
+            break;
+        case 2:
+            sortMatkulByKode();
+            tampilMatkul();
+            break;
+        case 3 : return;
+
+        default: break;
+    }
+
+    cin.fail();
+    cin.clear();
+    cin.ignore(1000, '\n');
 }
 
 int findMatkul(string kode) {
