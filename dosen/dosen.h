@@ -1,7 +1,7 @@
 #ifndef DOSEN_H
 #define DOSEN_H
 
-#include "../struct.h"
+#include "../struct/struct.h"
 
 void menuDosen(Akun *user);
 

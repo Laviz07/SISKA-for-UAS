@@ -5,12 +5,10 @@ using namespace std;
 #include "admin/admin.h"
 #include "dosen/dosen.h"
 #include "mahasiswa/mahasiswa.h"
+#include "struct/struct.h"
 #include "siska.h"
-#include "struct.h"
 
 int pilihan;
-
-void tampilMatkulDosen(string email);
 
 /* ---------------------- FUNGSI UNTUK KELOLA KRS --------------------- */
 // void tambahKrs(Mhs *m);

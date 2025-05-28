@@ -1,7 +1,7 @@
 #include "dosen.h"
 
 #include "../siska.h"
-#include "../struct.h"
+#include "../struct/struct.h"
 
 #include <iostream>
 

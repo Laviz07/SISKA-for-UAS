@@ -1,7 +1,7 @@
 #ifndef MAHASISWA_H
 #define MAHASISWA_H
 
-#include "../struct.h"
+#include "../struct/struct.h"
 
 void menuMhs(Akun *user);
 void tambahKrs(Mhs *m);

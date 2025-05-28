@@ -1,7 +1,7 @@
 #ifndef ADMIN_H
 #define ADMIN_H
 
-#include "../struct.h"
+#include "../struct/struct.h"
 
 void menuAdmin();
 
