@@ -3,8 +3,9 @@
 
 #include "struct.h"
 
-void  tampilkanBanner();
-void  tambahAkun(string email, string password, string role);
-Akun *login();
+void   tampilkanBanner();
+void   tambahAkun(string email, string password, string role);
+Akun  *login();
+string keHurufKecil(string str);
 
 #endif

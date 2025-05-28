@@ -12,22 +12,27 @@ void menuDosen(Akun *user) {
     do {
         cout << "\n---------- MENU UTAMA DOSEN ----------\n";
         cout << "NIP: " << user->email.substr(0, user->email.find('@')) << endl;
-        // cout << "Nama: " << user->nama << endl;
         cout << "Email: " << user->email << endl;
 
         cout << "1. Lihat Mata Kuliah Yang Diaampu\n";
-        cout << "2. Tambah Mata Kuliah Yang Diaampu\n";
         cout << "0. Keluar\n";
         cout << "Masukkan pilihan anda: ";
         cin >> pilihan;
 
         switch (pilihan) {
-            case 1 : tampilMatkulDosen(user->email); break;
+            case 1 : tampilMatkulDosen(getDosenByEmail(user->email)->email); break;
 
             default: break;
         }
 
     } while (pilihan != 0);
+}
+
+Akun *getDosenByEmail(string email) {
+    for (int i = 0; i < jumlahAkun; i++) {
+        if (daftarAkun[i].email == email && daftarAkun[i].role == "dosen") { return &daftarAkun[i]; }
+    }
+    return NULL;
 }
 
 void tampilMatkulDosen(string email) {

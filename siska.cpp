@@ -99,8 +99,20 @@ void tambahAkun(string email, string password, string role) {
     jumlahAkun++;
 }
 
+string keHurufKecil(string str) {
+    string hasil = "";
+    for (int i = 0; str[i] != '\0'; i++) {
+        char ch = str[i];
+        if (ch >= 'A' && ch <= 'Z') {
+            ch = ch + 32; // ubah huruf besar ke huruf kecil
+        }
+        hasil += ch;
+    }
+    return hasil;
+}
+
 int main() {
-    tambahAkun("adminsiska@unsika.ac.id", "admin1234", "admin");
+    tambahAkun("adminsiska@unsika.ac.id", "admin123", "admin");
 
     while (true) {
         Akun *user = login();

@@ -31,23 +31,11 @@ void menuAdmin() {
                     cin >> pilihan;
                     string npm;
                     switch (pilihan) {
-                        case 1: tambahMhs(); break;
-                        case 2: tampilMhs(); break;
-                        case 3:
-                            cout << "\nNPM: ";
-                            cin >> npm;
-                            cariMhs(npm);
-                            break;
-                        case 4:
-                            cout << "\nNPM: ";
-                            cin >> npm;
-                            editMhs(npm);
-                            break;
-                        case 5:
-                            cout << "\nNPM: ";
-                            cin >> npm;
-                            hapusMhs(npm);
-                            break;
+                        case 1 : tambahMhs(); break;
+                        case 2 : tampilMhs(); break;
+                        case 3 : cariMhs(); break;
+                        case 4 : editMhs(); break;
+                        case 5 : hapusMhs(); break;
                         default: cout << "Pilihan tidak tersedia" << endl;
                     }
 
@@ -67,23 +55,11 @@ void menuAdmin() {
                     cin >> pilihan;
                     string nip;
                     switch (pilihan) {
-                        case 1: tambahDosen(); break;
-                        case 2: tampilDosen(); break;
-                        case 3:
-                            cout << "NIP: ";
-                            cin >> nip;
-                            cariDosen(nip);
-                            break;
-                        case 4:
-                            cout << "NIP: ";
-                            cin >> nip;
-                            editDosen(nip);
-                            break;
-                        case 5:
-                            cout << "NIP: ";
-                            cin >> nip;
-                            hapusDosen(nip);
-                            break;
+                        case 1 : tambahDosen(); break;
+                        case 2 : tampilDosen(); break;
+                        case 3 : cariDosen(); break;
+                        case 4 : editDosen(); break;
+                        case 5 : hapusDosen(); break;
                         default: cout << "Pilihan tidak tersedia" << endl;
                     }
 
@@ -103,23 +79,11 @@ void menuAdmin() {
                     cin >> pilihan;
                     string kode;
                     switch (pilihan) {
-                        case 1: tambahMatkul(); break;
-                        case 2: tampilMatkul(); break;
-                        case 3:
-                            cout << "Kode: ";
-                            cin >> kode;
-                            cariMatkul(kode);
-                            break;
-                        case 4:
-                            cout << "Kode: ";
-                            cin >> kode;
-                            editMatkul(kode);
-                            break;
-                        case 5:
-                            cout << "Kode: ";
-                            cin >> kode;
-                            hapusMatkul(kode);
-                            break;
+                        case 1 : tambahMatkul(); break;
+                        case 2 : tampilMatkul(); break;
+                        case 3 : cariMatkul(); break;
+                        case 4 : editMatkul(); break;
+                        case 5 : hapusMatkul(); break;
                         default: cout << "Pilihan tidak tersedia" << endl;
                     }
                 } while (pilihan != 6);
@@ -139,6 +103,11 @@ void tambahMhs() {
     cout << "Masukkan NPM: ";
     cin >> daftarMhs[jumlahMhs].npm;
 
+    if (findMhs(daftarMhs[jumlahMhs].npm) != -1) {
+        cout << "\nNPM sudah terdaftar.\n";
+        return;
+    }
+
     cout << "Masukkan Nama: ";
     cin.ignore();
     getline(cin, daftarMhs[jumlahMhs].nama);
@@ -147,18 +116,6 @@ void tambahMhs() {
     tambahAkun(email, "123", "mahasiswa");
     jumlahMhs++;
     cout << "\nMahasiswa berhasil ditambahkan!.\n";
-}
-
-string keHurufKecil(string str) {
-    string hasil = "";
-    for (int i = 0; str[i] != '\0'; i++) {
-        char ch = str[i];
-        if (ch >= 'A' && ch <= 'Z') {
-            ch = ch + 32; // ubah huruf besar ke huruf kecil
-        }
-        hasil += ch;
-    }
-    return hasil;
 }
 
 void sortMhsByNama() { // menggunakan bubble sort
@@ -183,7 +140,7 @@ void tampilMhs() {
     cout << "\n===== DAFTAR MAHASISWA =====\n";
 
     if (jumlahMhs == 0) {
-        cout << "jumlah mahasiswa masih kosong.\n";
+        cout << "\nJumlah mahasiswa masih kosong.\n";
         return;
     }
 
@@ -226,8 +183,20 @@ int findMhs(string npm) {
     return -1;
 }
 
-void cariMhs(string npm) {
+void cariMhs() {
+    // jika mahasiswa masih kosong
+    if (jumlahMhs == 0) {
+        cout << "\nJumlah mahasiswa masih kosong.\n";
+        return;
+    }
+
+    cout << "\n===== CARI MAHASISWA =====\n";
+
+    string npm;
+    cout << "Masukkan NPM: ";
+    cin >> npm;
     int idx = findMhs(npm);
+
     if (idx != -1) {
         cout << "\nNama\t: " << daftarMhs[idx].nama << endl;
         cout << "NPM\t: " << daftarMhs[idx].npm << endl;
@@ -236,9 +205,23 @@ void cariMhs(string npm) {
     }
 }
 
-void editMhs(string npm) {
+void editMhs() {
+    // jika mahasiswa masih kosong
+    if (jumlahMhs == 0) {
+        cout << "\nJumlah mahasiswa masih kosong.\n";
+        return;
+    }
+
+    cout << "\n===== EDIT MAHASISWA =====\n";
+
+    string npm;
+    cout << "Masukkan NPM: ";
+    cin >> npm;
     int idx = findMhs(npm);
+
+    // jika mahasiswa tidak ditemukan
     if (idx == -1) {
+        cout << "\nMahasiswa tidak ditemukan.\n";
         return; //
     }
     cout << "\nMasukkan Nama Baru: ";
@@ -247,9 +230,25 @@ void editMhs(string npm) {
     cout << "\nMahasiswa berhasil diubah.\n";
 }
 
-void hapusMhs(string npm) {
+void hapusMhs() {
+    // jika mahasiswa masih kosong
+    if (jumlahMhs == 0) {
+        cout << "\nJumlah mahasiswa masih kosong.\n";
+        return;
+    }
+
+    cout << "\n===== HAPUS MAHASISWA =====\n";
+
+    string npm;
+    cout << "Masukkan NPM: ";
+    cin >> npm;
     int idx = findMhs(npm);
-    if (idx == -1) { return; }
+
+    if (idx == -1) {
+        cout << "\nMahasiswa tidak ditemukan.\n";
+        return;
+    }
+
     for (int i = idx; i < jumlahMhs - 1; i++) { daftarMhs[i] = daftarMhs[i + 1]; }
     jumlahMhs--;
     cout << "\nMahasiswa berhasil dihapus.\n";
@@ -260,6 +259,12 @@ void tambahDosen() {
     cout << "\n===== TAMBAH DOSEN =====\n";
     cout << "Masukkan NIP: ";
     cin >> daftarDosen[jumlahDosen].nip;
+
+    if (findDosen(daftarDosen[jumlahDosen].nip) != -1) {
+        cout << "\nNIP tersebut sudah terdaftar.\n"; //
+        return;
+    }
+
     cout << "Masukkan Nama: ";
     cin.ignore();
     getline(cin, daftarDosen[jumlahDosen].nama);
@@ -293,7 +298,7 @@ void tampilDosen() {
     cout << "\n===== DAFTAR DOSEN =====\n";
 
     if (jumlahDosen == 0) {
-        cout << "Dosen masih kosong.\n";
+        cout << "\nDosen masih kosong.\n";
         return;
     }
 
@@ -336,28 +341,77 @@ int findDosen(string nip) {
     return -1;
 }
 
-void cariDosen(string nip) {
+void cariDosen() {
+    // jika mahasiswa masih kosong
+    if (jumlahDosen == 0) {
+        cout << "\nJumlah dosen masih kosong.\n";
+        return;
+    }
+
+    cout << "\n===== CARI DOSEN =====\n";
+
+    string nip;
+    cout << "Masukkan NIP: ";
+    cin >> nip;
+
     int idx = findDosen(nip);
+
     if (idx != -1) {
         cout << "\nNama\t: " << daftarDosen[idx].nama << endl;
         cout << "NIP\t: " << daftarDosen[idx].nip << endl;
     } else {
-        cout << "Dosen tidak ditemukan.\n";
+        cout << "\nDosen tidak ditemukan.\n";
     }
 }
 
-void editDosen(string nip) {
+void editDosen() {
+    // jika mahasiswa masih kosong
+    if (jumlahDosen == 0) {
+        cout << "\nJumlah dosen masih kosong.\n";
+        return;
+    }
+
+    cout << "\n===== EDIT DOSEN =====\n";
+
+    string nip;
+    cout << "Masukkan NIP: ";
+    cin >> nip;
+
     int idx = findDosen(nip);
-    if (idx == -1) { return; }
+
+    // jika Dosen tidak ditemukan
+    if (idx == -1) {
+        cout << "\nDosen tidak ditemukan.\n";
+        return;
+    }
+
     cout << "\nMasukkan Nama Baru: ";
     cin.ignore();
     getline(cin, daftarDosen[idx].nama);
     cout << "\nDosen berhasil diubah!\n";
 }
 
-void hapusDosen(string nip) {
+void hapusDosen() {
+    // jika mahasiswa masih kosong
+    if (jumlahDosen == 0) {
+        cout << "\nJumlah dosen masih kosong.\n";
+        return;
+    }
+
+    cout << "\n===== HAPUS DOSEN =====\n";
+
+    string nip;
+    cout << "Masukkan NIP: ";
+    cin >> nip;
+
     int idx = findDosen(nip);
-    if (idx == -1) { return; }
+
+    // jika Dosen tidak ditemukan
+    if (idx == -1) {
+        cout << "\nDosen tidak ditemukan.\n";
+        return;
+    }
+
     for (int i = idx; i < jumlahDosen - 1; i++) { daftarDosen[i] = daftarDosen[i + 1]; }
     jumlahDosen--;
     cout << "\nDosen berhasil dihapus!\n";
@@ -365,7 +419,8 @@ void hapusDosen(string nip) {
 
 /* ------------------------ MATKUL ------------------------ */
 void tambahMatkul() {
-    cout << "\nMasukkan Kode: ";
+    cout << "\n===== TAMBAH MATA KULIAH =====\n";
+    cout << "Masukkan Kode: ";
     cin >> daftarMatkul[jumlahMatkul].kode;
 
     // jika kode sudah ada
@@ -422,7 +477,7 @@ void sortMatkulByKode() { // menggunakan bubble sort
 void tampilMatkul() {
     cout << "\n===== DAFTAR MATA KULIAH =====\n";
     if (jumlahMatkul == 0) {
-        cout << "Belum ada mata kuliah.\n";
+        cout << "\nBelum ada mata kuliah.\n";
         return;
     }
     for (int i = 0; i < jumlahMatkul; i++) {
@@ -464,8 +519,20 @@ int findMatkul(string kode) {
     return -1;
 }
 
-void cariMatkul(string kode) {
+void cariMatkul() {
+    if (jumlahMatkul == 0) {
+        cout << "\nJumlah Mata Kuliah masih kosong.\n";
+        return;
+    }
+
+    cout << "\n===== CARI MATA KULIAH =====\n";
+
+    string kode;
+    cout << "Masukkan kode Mata Kuliah: ";
+    cin >> kode;
+
     int idx = findMatkul(kode);
+
     if (idx != -1) {
         cout << "\nNama Mata Kuliah\t: " << daftarMatkul[idx].nama << endl;
         cout << "Kode\t: " << daftarMatkul[idx].kode << endl;
@@ -476,9 +543,25 @@ void cariMatkul(string kode) {
     }
 }
 
-void editMatkul(string kode) {
+void editMatkul() {
+    if (jumlahMatkul == 0) {
+        cout << "\nJumlah Mata Kuliah masih kosong.\n";
+        return;
+    }
+
+    cout << "\n===== EDIT MATA KULIAH =====\n";
+
+    string kode;
+    cout << "Masukkan kode Mata Kuliah: ";
+    cin >> kode;
+
     int idx = findMatkul(kode);
-    if (idx == -1) { return; }
+    // jika Mata Kuliah tidak ditemukan
+    if (idx == -1) {
+        cout << "\nMata Kuliah tidak ditemukan.\n";
+        return;
+    }
+
     cout << "Masukkan Nama Mata Kuliah Baru: ";
     cin.ignore();
     getline(cin, daftarMatkul[idx].nama);
@@ -492,9 +575,25 @@ void editMatkul(string kode) {
     cout << "\nMatkul berhasil diubah.\n";
 }
 
-void hapusMatkul(string kode) {
+void hapusMatkul() {
+    if (jumlahMatkul == 0) {
+        cout << "\nJumlah Mata Kuliah masih kosong.\n";
+        return;
+    }
+
+    cout << "\n===== HAPUS MATA KULIAH =====\n";
+
+    string kode;
+    cout << "Masukkan kode Mata Kuliah: ";
+    cin >> kode;
+
     int idx = findMatkul(kode);
-    if (idx == -1) { return; }
+
+    // jika Mata kuliah tidak ditemukan
+    if (idx == -1) {
+        cout << "\nMata kuliah tidak ditemukan.\n";
+        return;
+    }
     for (int i = idx; i < jumlahMatkul - 1; i++) { daftarMatkul[i] = daftarMatkul[i + 1]; }
     jumlahMatkul--;
     cout << "Matkul berhasil dihapus.\n";
