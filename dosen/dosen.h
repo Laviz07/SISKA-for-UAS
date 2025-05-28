@@ -5,7 +5,8 @@
 
 void menuDosen(Akun *user);
 
-void  tampilMatkulDosen(string email);
-Akun *getDosenByEmail(string email);
+Dosen *getDosenByEmail(string email);
+void   tampilMatkulDosen(Dosen *dsn);
+void   tampilProfil(Dosen *dsn);
 
 #endif

@@ -7,17 +7,25 @@
 using namespace std;
 
 void menuAdmin() {
+    int pilihanUtama, pilihanMahasiswa, pilihanDosen, pilihanMatkul;
     tampilkanBanner();
     do {
         cout << "\n---------- MENU UTAMA ADMIN ----------\n";
         cout << "1. Kelola Mahasiswa\n";
         cout << "2. Kelola Dosen\n";
         cout << "3. Kelola Mata Kuliah\n";
-        cout << "0. Logout\n";
+        cout << "4. Logout\n";
         cout << "Masukkan pilihan anda: ";
-        cin >> pilihan;
+        cin >> pilihanUtama;
 
-        switch (pilihan) {
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Input tidak valid. Harap masukkan angka.\n";
+            continue; // kembali ke awal loop
+        }
+
+        switch (pilihanUtama) {
             case 1:
                 do {
                     cout << "\n===== KELOLA MAHASISWA =====\n";
@@ -27,19 +35,27 @@ void menuAdmin() {
                     cout << "4. Edit Mahasiswa\n";
                     cout << "5. Hapus Mahasiswa\n";
                     cout << "6. Kembali\n";
-                    cout << "Pilihan: ";
-                    cin >> pilihan;
-                    string npm;
-                    switch (pilihan) {
+                    cout << "Masukkan pilihan anda: ";
+                    cin >> pilihanMahasiswa;
+
+                    if (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(1000, '\n');
+                        cout << "Input tidak valid. Harap masukkan angka.\n";
+                        continue; // kembali ke awal loop
+                    }
+
+                    switch (pilihanMahasiswa) {
                         case 1 : tambahMhs(); break;
                         case 2 : tampilMhs(); break;
                         case 3 : cariMhs(); break;
                         case 4 : editMhs(); break;
                         case 5 : hapusMhs(); break;
+                        case 6 : break;
                         default: cout << "Pilihan tidak tersedia" << endl;
                     }
 
-                } while (pilihan != 6);
+                } while (pilihanMahasiswa != 6);
                 break;
 
             case 2:
@@ -51,19 +67,27 @@ void menuAdmin() {
                     cout << "4. Edit Dosen\n";
                     cout << "5. Hapus Dosen\n";
                     cout << "6. Kembali\n";
-                    cout << "Pilihan: ";
-                    cin >> pilihan;
-                    string nip;
-                    switch (pilihan) {
+                    cout << "Masukkan pilihan anda: ";
+                    cin >> pilihanDosen;
+
+                    if (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(1000, '\n');
+                        cout << "Input tidak valid. Harap masukkan angka.\n";
+                        continue; // kembali ke awal loop
+                    }
+
+                    switch (pilihanDosen) {
                         case 1 : tambahDosen(); break;
                         case 2 : tampilDosen(); break;
                         case 3 : cariDosen(); break;
                         case 4 : editDosen(); break;
                         case 5 : hapusDosen(); break;
+                        case 6 : break;
                         default: cout << "Pilihan tidak tersedia" << endl;
                     }
 
-                } while (pilihan != 6);
+                } while (pilihanDosen != 6);
                 break;
 
             case 3:
@@ -75,26 +99,31 @@ void menuAdmin() {
                     cout << "4. Edit Mata Kuliah\n";
                     cout << "5. Hapus Mata Kuliah\n";
                     cout << "6. Kembali\n";
-                    cout << "Pilihan: ";
-                    cin >> pilihan;
-                    string kode;
-                    switch (pilihan) {
+                    cout << "Masukkan pilihan anda: ";
+                    cin >> pilihanMatkul;
+
+                    if (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(1000, '\n');
+                        cout << "Input tidak valid. Harap masukkan angka.\n";
+                        continue; // kembali ke awal loop
+                    }
+
+                    switch (pilihanMatkul) {
                         case 1 : tambahMatkul(); break;
                         case 2 : tampilMatkul(); break;
                         case 3 : cariMatkul(); break;
                         case 4 : editMatkul(); break;
                         case 5 : hapusMatkul(); break;
+                        case 6 : break;
                         default: cout << "Pilihan tidak tersedia" << endl;
                     }
-                } while (pilihan != 6);
+                } while (pilihanMatkul != 6);
                 break;
 
-            default: cout << "Pilihan tidak tersedia" << endl;
+            default: cout << "Pilihan tidak tersedia" << endl; break;
         }
-        cin.fail();
-        cin.clear();
-        cin.ignore(1000, '\n');
-    } while (pilihan != 0);
+    } while (pilihanUtama != 4);
 }
 
 /* -------------------------------- MAHASISWA ------------------------------- */
@@ -137,6 +166,7 @@ void sortMhsByNPM() { // menggunakan bubble sort
 }
 
 void tampilMhs() {
+    int pilihSort;
     cout << "\n===== DAFTAR MAHASISWA =====\n";
 
     if (jumlahMhs == 0) {
@@ -154,10 +184,10 @@ void tampilMhs() {
     cout << "1. Nama\n";
     cout << "2. NPM\n";
     cout << "3. Kembali\n";
-    cout << "Pilihan: ";
-    cin >> pilihan;
+    cout << "Masukkan pilihan anda: ";
+    cin >> pilihSort;
 
-    switch (pilihan) {
+    switch (pilihSort) {
         case 1:
             sortMhsByNama();
             tampilMhs();
@@ -168,12 +198,13 @@ void tampilMhs() {
             break;
         case 3 : return;
 
-        default: break;
+        default: cout << "Pilihan tidak tersedia" << endl; break;
     }
 
-    cin.fail();
-    cin.clear();
-    cin.ignore(1000, '\n');
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
 }
 
 int findMhs(string npm) {
@@ -295,6 +326,7 @@ void sortDosenByNIP() { // menggunakan bubble sort
 }
 
 void tampilDosen() {
+    int pilihSort;
     cout << "\n===== DAFTAR DOSEN =====\n";
 
     if (jumlahDosen == 0) {
@@ -312,10 +344,16 @@ void tampilDosen() {
     cout << "1. Nama\n";
     cout << "2. NIP\n";
     cout << "3. Kembali\n";
-    cout << "Pilihan: ";
-    cin >> pilihan;
+    cout << "Masukkan pilihan anda: ";
+    cin >> pilihSort;
 
-    switch (pilihan) {
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Input tidak valid. Harap masukkan angka.\n";
+    }
+
+    switch (pilihSort) {
         case 1:
             sortDosenByNama();
             tampilDosen();
@@ -328,10 +366,6 @@ void tampilDosen() {
 
         default: break;
     }
-
-    cin.fail();
-    cin.clear();
-    cin.ignore(1000, '\n');
 }
 
 int findDosen(string nip) {
@@ -475,6 +509,7 @@ void sortMatkulByKode() { // menggunakan bubble sort
 }
 
 void tampilMatkul() {
+    int pilihSort;
     cout << "\n===== DAFTAR MATA KULIAH =====\n";
     if (jumlahMatkul == 0) {
         cout << "\nBelum ada mata kuliah.\n";
@@ -490,10 +525,10 @@ void tampilMatkul() {
     cout << "1. Nama\n";
     cout << "2. Kode Mata Kuliah\n";
     cout << "3. Kembali\n";
-    cout << "Pilihan: ";
-    cin >> pilihan;
+    cout << "Masukkan pilihan anda: ";
+    cin >> pilihSort;
 
-    switch (pilihan) {
+    switch (pilihSort) {
         case 1:
             sortMatkulByNama();
             tampilMatkul();
@@ -504,7 +539,7 @@ void tampilMatkul() {
             break;
         case 3 : return;
 
-        default: break;
+        default: cout << "Pilihan tidak tersedia" << endl; break;
     }
 
     cin.fail();

@@ -22,19 +22,27 @@ void menuMhs(Akun *user) {
         cout << "1. Lihat KRS\n";
         cout << "2. Ambil Mata Kuliah\n";
         cout << "3. Hapus Mata Kuliah dari KRS\n";
-        cout << "0. Logout\n";
+        cout << "4. Lihat Profil\n";
+        cout << "5. Logout\n";
         cout << "Masukkan pilihan anda: ";
         cin >> pilihan;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Input tidak valid. Harap masukkan angka.\n";
+        }
 
         switch (pilihan) {
             case 1 : tampilKrs(mhs); break;
             case 2 : tambahKrs(mhs); break;
             case 3 : hapusKrs(mhs); break;
+            case 4 : tampilProfil(mhs); break;
 
             default: cout << "Pilihan tidak valid.\n"; break;
         }
 
-    } while (pilihan != 0);
+    } while (pilihan != 5);
 }
 
 Mhs *getMhsByEmail(string email) {
@@ -121,11 +129,12 @@ void tambahKrs(Mhs *mhs) {
 }
 
 void hapusKrs(Mhs *mhs) {
+    cout << "\n===== HAPUS MATA KULIAH DARI KRS =====\n";
     if (mhs->krs == nullptr) {
         cout << "KRS masih kosong.\n";
         return;
     }
-    
+
     string kode;
     cout << "\nMasukkan kode matkul yang ingin dihapus dari KRS: ";
     cin >> kode;
@@ -152,4 +161,12 @@ void hapusKrs(Mhs *mhs) {
         prev = curr;
         curr = curr->next;
     }
+}
+
+// lihat profil
+void tampilProfil(Mhs *mhs) {
+    cout << "\n===== PROFIL MAHASISWA =====\n";
+    cout << "Nama\t: " << mhs->nama << endl;
+    cout << "NPM\t: " << mhs->npm << endl;
+    cout << "Email\t: " << mhs->npm << "@student.unsika.ac.id" << endl;
 }
