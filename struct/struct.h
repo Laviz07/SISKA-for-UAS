@@ -27,7 +27,9 @@ struct NodeKrs {
         NodeKrs *next;
 };
 
-const int     MAX = 50;
+const int MAX = 50;
+
+// mendeklarasikan variabel yang sudah ada di struct.cpp
 extern Matkul daftarMatkul[MAX];
 extern Mhs    daftarMhs[MAX];
 extern Dosen  daftarDosen[MAX];

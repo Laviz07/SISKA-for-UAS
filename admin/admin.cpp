@@ -6,6 +6,7 @@
 #include <string>
 using namespace std;
 
+/* ------------------------------- MENU ADMIN ------------------------------- */
 void menuAdmin() {
     int pilihanUtama, pilihanMahasiswa, pilihanDosen, pilihanMatkul;
     tampilkanBanner();
@@ -18,11 +19,12 @@ void menuAdmin() {
         cout << "Masukkan pilihan anda: ";
         cin >> pilihanUtama;
 
+        // jika input tidak valid
         if (cin.fail()) {
-            cin.clear();
-            cin.ignore(1000, '\n');
+            cin.clear();            // membersihkan buffer
+            cin.ignore(1000, '\n'); // mengabaikan input sebelumnya
             cout << "Input tidak valid. Harap masukkan angka.\n";
-            continue; // kembali ke awal loop
+            continue;               // kembali ke awal loop
         }
 
         switch (pilihanUtama) {
@@ -126,45 +128,66 @@ void menuAdmin() {
     } while (pilihanUtama != 4);
 }
 
+// fungsi untuk mencari indeks mahasiswa
+int findMhs(string npm) {
+    for (int i = 0; i < jumlahMhs; i++) {
+        if (daftarMhs[i].npm == npm) { // jika npm mahasiswa ke-i sama dengan npm yang dicari
+            return i;                  // maka kembalikan indeks mahasiswa
+        }
+    }
+    return -1;                         // jika tidak ditemukan, kembalikan -1
+}
+
 /* -------------------------------- MAHASISWA ------------------------------- */
 void tambahMhs() {
     cout << "\n===== TAMBAH MAHASISWA =====\n";
     cout << "Masukkan NPM: ";
     cin >> daftarMhs[jumlahMhs].npm;
 
+    // jika NPM sudah terdaftar
     if (findMhs(daftarMhs[jumlahMhs].npm) != -1) {
         cout << "\nNPM sudah terdaftar.\n";
         return;
     }
 
     cout << "Masukkan Nama: ";
-    cin.ignore();
-    getline(cin, daftarMhs[jumlahMhs].nama);
+    cin.ignore();                            // membersihkan buffer
+    getline(cin, daftarMhs[jumlahMhs].nama); // membaca input dengan spasi
 
+    // membuat email mahasiswa berdasarkan NPM
     string email = daftarMhs[jumlahMhs].npm + "@student.unsika.ac.id";
-    tambahAkun(email, "123", "mahasiswa");
-    jumlahMhs++;
+    tambahAkun(email, "123", "mahasiswa"); // menambahkan akun
+    jumlahMhs++;                           // jumlah mahasiswa bertambah
     cout << "\nMahasiswa berhasil ditambahkan!.\n";
 }
 
-void sortMhsByNama() { // menggunakan bubble sort
+// fungsi untuk mengurutkan daftar mahasiswa berdasarkan Nama menggunakan bubble sort
+void sortMhsByNama() {
+    // looping sebanyak jumlah mahasiswa - 1 karena array dimulai dari index 0
     for (int i = 0; i < jumlahMhs - 1; i++) {
+        // i+1 karena looping dimulai dari index 1
         for (int j = i + 1; j < jumlahMhs; j++) {
+            // jika nama mahasiswa ke-i lebih besar dari nama mahasiswa ke-j
             if (keHurufKecil(daftarMhs[i].nama) > keHurufKecil(daftarMhs[j].nama)) {
-                swap(daftarMhs[i], daftarMhs[j]); //
+                swap(daftarMhs[i], daftarMhs[j]); // tukar posisinya
             }
         }
     }
 }
 
-void sortMhsByNPM() { // menggunakan bubble sort
+// fungsi untuk mengurutkan daftar mahasiswa berdasarkan Npm menggunakan bubble sort
+void sortMhsByNPM() {
     for (int i = 0; i < jumlahMhs - 1; i++) {
         for (int j = i + 1; j < jumlahMhs; j++) {
-            if (daftarMhs[i].npm > daftarMhs[j].npm) { swap(daftarMhs[i], daftarMhs[j]); }
+            // jika npm mahasiswa ke-i lebih besar dari npm mahasiswa ke-j
+            if (daftarMhs[i].npm > daftarMhs[j].npm) {
+                swap(daftarMhs[i], daftarMhs[j]); // tukar posisinya
+            }
         }
     }
 }
 
+// fungsi untuk menampilkan daftar mahasiswa
 void tampilMhs() {
     int pilihSort;
     cout << "\n===== DAFTAR MAHASISWA =====\n";
@@ -207,13 +230,7 @@ void tampilMhs() {
     }
 }
 
-int findMhs(string npm) {
-    for (int i = 0; i < jumlahMhs; i++) {
-        if (daftarMhs[i].npm == npm) { return i; }
-    }
-    return -1;
-}
-
+// fungsi untuk mencari mahasiswa
 void cariMhs() {
     // jika mahasiswa masih kosong
     if (jumlahMhs == 0) {
@@ -226,9 +243,9 @@ void cariMhs() {
     string npm;
     cout << "Masukkan NPM: ";
     cin >> npm;
-    int idx = findMhs(npm);
+    int idx = findMhs(npm); // mencari indeks mahasiswa
 
-    if (idx != -1) {
+    if (idx != -1) {        // jika mahasiswa ditemukan
         cout << "\nNama\t: " << daftarMhs[idx].nama << endl;
         cout << "NPM\t: " << daftarMhs[idx].npm << endl;
     } else {
@@ -236,6 +253,7 @@ void cariMhs() {
     }
 }
 
+// fungsi untuk mengedit mahasiswa
 void editMhs() {
     // jika mahasiswa masih kosong
     if (jumlahMhs == 0) {
@@ -248,19 +266,20 @@ void editMhs() {
     string npm;
     cout << "Masukkan NPM: ";
     cin >> npm;
-    int idx = findMhs(npm);
+    int idx = findMhs(npm); // mencari indeks mahasiswa
 
     // jika mahasiswa tidak ditemukan
     if (idx == -1) {
         cout << "\nMahasiswa tidak ditemukan.\n";
-        return; //
+        return;                        //
     }
     cout << "\nMasukkan Nama Baru: ";
-    cin.ignore();
-    getline(cin, daftarMhs[idx].nama);
+    cin.ignore();                      // membersikan buffer
+    getline(cin, daftarMhs[idx].nama); // mengubah nama mahasiswa
     cout << "\nMahasiswa berhasil diubah.\n";
 }
 
+// fungsi untuk menghapus mahasiswa
 void hapusMhs() {
     // jika mahasiswa masih kosong
     if (jumlahMhs == 0) {
@@ -273,15 +292,18 @@ void hapusMhs() {
     string npm;
     cout << "Masukkan NPM: ";
     cin >> npm;
-    int idx = findMhs(npm);
+    int idx = findMhs(npm); // mencari indeks mahasiswa
 
-    if (idx == -1) {
+    if (idx == -1) {        // jika mahasiswa tidak ditemukan
         cout << "\nMahasiswa tidak ditemukan.\n";
         return;
     }
 
-    for (int i = idx; i < jumlahMhs - 1; i++) { daftarMhs[i] = daftarMhs[i + 1]; }
-    jumlahMhs--;
+    // perulangan untuk menghapus mahasiswa
+    for (int i = idx; i < jumlahMhs - 1; i++) {
+        daftarMhs[i] = daftarMhs[i + 1]; // mengganti mahasiswa dengan mahasiswa selanjutnya
+    }
+    jumlahMhs--;                         // jumlah mahasiswa berkurang
     cout << "\nMahasiswa berhasil dihapus.\n";
 }
 

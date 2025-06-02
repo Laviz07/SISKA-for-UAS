@@ -9,6 +9,6 @@ void tampilKrs(Mhs *m);
 void hapusKrs(Mhs *m);
 bool sudahAdaDiKrs(Mhs *mhs, string kode);
 Mhs *getMhsByEmail(string email);
-void tampilProfil(Mhs *mhs);
+void tampilProfilMhs(Mhs *mhs);
 
 #endif
