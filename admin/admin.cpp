@@ -150,6 +150,20 @@ void tambahMhs() {
         return;
     }
 
+    // mengecek npm hanya berupa angka
+    for (int i = 0; i < daftarMhs[jumlahMhs].npm.length(); i++) {
+        if (!isdigit(daftarMhs[jumlahMhs].npm[i])) {
+            cout << "\nNPM hanya berupa angka.\n";
+            return;
+        }
+    }
+
+    // jika sudah melebihi batas
+    if (jumlahMhs == MAX) {
+        cout << "\nDaftar mahasiswa sudah penuh.\n";
+        return;
+    }
+
     cout << "Masukkan Nama: ";
     cin.ignore();                            // membersihkan buffer
     getline(cin, daftarMhs[jumlahMhs].nama); // membaca input dengan spasi
@@ -315,6 +329,20 @@ void tambahDosen() {
 
     if (findDosen(daftarDosen[jumlahDosen].nip) != -1) {
         cout << "\nNIP tersebut sudah terdaftar.\n"; //
+        return;
+    }
+
+    // mengecek nip hanya berupa angka
+    for (int i = 0; i < daftarDosen[jumlahDosen].nip.length(); i++) {
+        if (!isdigit(daftarDosen[jumlahDosen].nip[i])) {
+            cout << "\nNIP hanya berupa angka.\n";
+            return;
+        }
+    }
+
+    // jika sudah melebihi batas
+    if (jumlahDosen == MAX) {
+        cout << "\nDaftar dosen sudah penuh.\n";
         return;
     }
 
@@ -496,6 +524,12 @@ void tambahMatkul() {
             cout << "Kode mata kuliah sudah ada.\n";
             return;
         }
+    }
+
+    // jika sudah melebihi batas
+    if (jumlahMatkul == MAX) {
+        cout << "\nDaftar mata kuliah sudah penuh.\n";
+        return;
     }
 
     cout << "Masukkan Nama Mata Kuliah: ";
