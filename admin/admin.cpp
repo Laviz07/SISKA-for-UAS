@@ -468,8 +468,19 @@ void hapusDosen() {
         return;
     }
 
-    for (int i = idx; i < jumlahDosen - 1; i++) { daftarDosen[i] = daftarDosen[i + 1]; }
-    jumlahDosen--;
+    // jika dosen sedang mengampu mata kuliah
+    for (int i = 0; i < jumlahMatkul; i++) {
+        if (daftarMatkul[i].nip_dosen == daftarDosen[idx].nip) {
+            cout << "\nDosen sedang mengampu mata kuliah.\n";
+            return;
+        }
+    }
+
+    // perulagan untuk mencari dosen yang akan menghapus dosen
+    for (int i = idx; i < jumlahDosen - 1; i++) {
+        daftarDosen[i] = daftarDosen[i + 1]; // menggeser posisi dosen
+    }
+    jumlahDosen--;                           // mengurangi jumlah dosen
     cout << "\nDosen berhasil dihapus!\n";
 }
 
@@ -493,7 +504,7 @@ void tambahMatkul() {
     cout << "Masukkan SKS: ";
     cin >> daftarMatkul[jumlahMatkul].sks;
     cout << "Masukkan NIP Dosen Pengampu: ";
-    cin >> daftarMatkul[jumlahMatkul].nip_dosen;
+    cin >> daftarMatkul[jumlahMatkul].nip_dosen; // foreign key
 
     // jika dosen tidak ditemukan
     if (findDosen(daftarMatkul[jumlahMatkul].nip_dosen) == -1) {
@@ -651,6 +662,7 @@ void hapusMatkul() {
         cout << "\nMata kuliah tidak ditemukan.\n";
         return;
     }
+
     for (int i = idx; i < jumlahMatkul - 1; i++) { daftarMatkul[i] = daftarMatkul[i + 1]; }
     jumlahMatkul--;
     cout << "Matkul berhasil dihapus.\n";

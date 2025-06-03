@@ -9,16 +9,20 @@ struct Akun {
 };
 
 struct Dosen {
-        string nip, nama;
+        string nip, //primary key 
+        nama;
 };
 
 struct Mhs {
-        string          npm, nama;
+        string          npm, //primary key
+         nama;
         struct NodeKrs *krs = nullptr;
 };
 
 struct Matkul {
-        string kode, nama, nip_dosen;
+        string kode, //primary key 
+        nama, 
+        nip_dosen; //foreign key
         int    sks;
 };
 
